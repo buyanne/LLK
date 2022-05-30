@@ -178,7 +178,8 @@ void CGameMap::InitMap() {
 	 return pGameMap[nRow][nCol];
  }
 
- int CGameMap::GetVexPath(Vertex avPath[4], int& nVexNum)
+
+ int CGameMap::GetVexPath(Vertex avPath[4])
  {
 	 for (int i = 0; i < m_nVexNum; i++) {
 		 avPath[i] = m_avPath[i];
@@ -191,14 +192,14 @@ void CGameMap::InitMap() {
 	 m_avPath[m_nVexNum++] = v;
  }
 
-void CGameMap::ClearStack() {
-	 memset(m_avPath, 0, sizeof(m_avPath));
-	 m_nVexNum = 0;
- }
-
  void CGameMap::PopVertex()
  {
 	 m_nVexNum--;
+ }
+#include<iostream>
+ void CGameMap::ClearStack() {
+	 memset(m_avPath, 0, sizeof(m_avPath));
+	 m_nVexNum = 0;
  }
 
  bool CGameMap::LineX(int nRow, int nCol1, int nCol2)
@@ -325,7 +326,7 @@ void CGameMap::ClearStack() {
 	 }
  }
 
- void CGameMap::ResetMap()
+ void CGameMap::ResetGraph()
  {
 	 int nVertexNum = nRows * nCols;
 	 srand((unsigned int)time(NULL));
@@ -333,7 +334,6 @@ void CGameMap::ClearStack() {
 	 for (int i = 0; i < nVertexNum; i++) {
 		 int nIndex1 = rand() % nVertexNum;
 		 int nIndex2 = rand() % nVertexNum;
-
 
 		 int nTemp = pGameMap[nIndex1 / nCols][nIndex1 % nCols];
 

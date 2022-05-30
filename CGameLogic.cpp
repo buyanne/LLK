@@ -398,7 +398,6 @@ bool CGameLogic::IsLink(CGraph& g, Vertex v1, Vertex v2)
 
 	}
 	PopVertexGraph();
-	return false;
 
 	return false;
 }

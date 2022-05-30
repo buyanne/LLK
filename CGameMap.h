@@ -8,9 +8,9 @@ public:
     ~CGameMap();
 public:
     int** pGameMap;
-    int nRows;
-    int nCols;
-    int nPicNum;
+    //int nRows;
+    //int nCols;
+    //int nPicNum;
 
 public:
     int m_nVexNum;
@@ -24,22 +24,19 @@ public:
 
     void Clear(Vertex v1, Vertex v2);
 
-    bool IsLink(Vertex v1, Vertex v2);
-
     bool IsBlank();
 
     bool SearchHelpPath();
 
     int GetElement(int nRow, int nCol);
 
-    int GetVexPath(Vertex avPath[4], int& nVexNum);
+    int GetVexPath(Vertex avPath[4]);
     
     void PushVertex(Vertex v);
 
-
-    void ClearStack();
-
     void PopVertex();
+    
+    void ClearStack();
 
     bool LineX(int nRow, int nCol1, int nCol2);
 
@@ -53,9 +50,11 @@ public:
 
     bool TwoCornerLink(Vertex v1, Vertex v2);
 
+    bool IsLink(Vertex v1, Vertex v2);
+
     void ClearMap();
 
-    void ResetMap();
+    void ResetGraph();
     
 
 

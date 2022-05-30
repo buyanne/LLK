@@ -23,8 +23,8 @@ public:
 	Vertex m_svSelSec;
 
 	// the map of game
-	int** m_pGameMap;
-	CGameLogic m_GameLogic;
+	/*int** m_pGameMap;
+	CGameLogic m_GameLogic;*/
 
 public:
 	// construction 
