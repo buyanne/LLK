@@ -153,6 +153,7 @@ void CGameDlg::OnClickedBtnStartgame() {
 
 		this->GetDlgItem(IDC_BTN_GAMETIPS)->EnableWindow(TRUE);
 		this->GetDlgItem(IDC_BTN_RELOADMAP)->EnableWindow(TRUE);
+		
 		this->GetDlgItem(IDC_BTN_PAUSEGAME)->EnableWindow(TRUE);
 
 		this->SetTimer(1, 1000, NULL);
@@ -355,16 +356,19 @@ void CGameDlg::OnClickedBtnGametips()
 
 	Vertex avPath[MAX_VERTEX_NUM];
 	int nVexNum = 0;
-
-
-	bool nSub = m_gameControl.GetGameHelp(avPath, nVexNum);
-	if (nSub) {
+	if (m_gameControl.GetGameHelp(avPath, nVexNum)) {
+		//画第一个点的提示框
+		DrawTipFrame(avPath[0].row, avPath[0].col);
+		//画第一个点的提示框
+		DrawTipFrame(avPath[nVexNum - 1].row, avPath[nVexNum - 1].col);
+		//画提示线
 		DrawTipLine(avPath, nVexNum);
-		Sleep(500);
-		InvalidateRect(m_rtGameRect, false);
+		Sleep(1000);    //延迟
+		UpdateMap();	//更新地图
+		InvalidateRect(m_rtGameRect, FALSE);
 	}
 	else {
-		MessageBox(_T("没有找到路径\n请进行重排操作"));
+		MessageBox(_T("没有找到路径请进行重排"));
 	}
 }
 

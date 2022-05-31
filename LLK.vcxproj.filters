@@ -39,16 +39,10 @@
     <ClInclude Include="CGameDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CGameLogic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CGameControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CGameException.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CGraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Base.h">
@@ -74,16 +68,10 @@
     <ClCompile Include="CGameDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CGameLogic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CGameControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CGameException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CGraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Base.cpp">

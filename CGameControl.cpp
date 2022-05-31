@@ -36,17 +36,19 @@ void CGameControl::SetFirstPoint(int nRow, int nCol)
 	m_svSelFst.col = nCol;
 }
 
-void CGameControl::Reoriganize()
-{
-	/*m_GameLogic.Reoriganize(m_pGameMap);*/
-	base->ResetGraph();
-}
 
 void CGameControl::SetSecondPoint(int nRow, int nCol)
 {
 	m_svSelSec.row = nRow;
 	m_svSelSec.col = nCol;
 }
+
+void CGameControl::Reoriganize()
+{
+	/*m_GameLogic.Reoriganize(m_pGameMap);*/
+	base->ResetGraph();
+}
+
 
 bool CGameControl::GetGameHelp(Vertex avPath[4],int & nVexNum)
 {
@@ -56,6 +58,10 @@ bool CGameControl::GetGameHelp(Vertex avPath[4],int & nVexNum)
 		return true;
 	}
 	return false;*/
+
+	if (base->IsBlank()) {
+		return false;
+	}
 
 	if (base->SearchHelpPath()) {
 		nVexNum = base->GetVexPath(avPath);
@@ -124,7 +130,6 @@ bool CGameControl::IsWin(void)
 void CGameControl::Lose()
 {
 	/*m_GameLogic.ClearMap(m_pGameMap);*/
-	
 }
 
 

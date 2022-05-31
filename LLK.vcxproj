@@ -188,9 +188,7 @@
     <ClInclude Include="CGameDlg.h" />
     <ClInclude Include="CGameException.h" />
     <ClInclude Include="CGameGraph.h" />
-    <ClInclude Include="CGameLogic.h" />
     <ClInclude Include="CGameMap.h" />
-    <ClInclude Include="CGraph.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="LLK.h" />
@@ -205,9 +203,7 @@
     <ClCompile Include="CGameDlg.cpp" />
     <ClCompile Include="CGameException.cpp" />
     <ClCompile Include="CGameGraph.cpp" />
-    <ClCompile Include="CGameLogic.cpp" />
     <ClCompile Include="CGameMap.cpp" />
-    <ClCompile Include="CGraph.cpp" />
     <ClCompile Include="LLK.cpp" />
     <ClCompile Include="LLKDlg.cpp" />
     <ClCompile Include="pch.cpp">

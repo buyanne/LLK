@@ -1,5 +1,6 @@
 #pragma once
 #include "Base.h"
+#include "global.h"
 class CGameMap :
     public Base
 {

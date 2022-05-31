@@ -12,7 +12,7 @@
 #include"CGameControl.h"
 #include"CGameDlg.h"
 #include"CGameException.h"
-#include"CGameLogic.h"
+
 
 #include"LLK.h"
 #include"LLKDlg.h"

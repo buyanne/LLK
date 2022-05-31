@@ -1,27 +1,25 @@
-#include "pch.h"
 #include "CGameGraph.h"
+#include"pch.h"
 
 CGameGraph::CGameGraph()
 {
-	m_nArcNum = 0;
-	m_nCorner = 0;
 	m_nVexNum = 0;
+	m_nCorner = 0;
+	m_nArcNum = 0;
+	m_nStackVexNum = 0;
 	InitGraph();
-	
 }
 
 CGameGraph::~CGameGraph()
 {
-	ReleaseMap();
 }
-
-
 
 void CGameGraph::InitGraph()
 {
 	for (int i = 0; i < MAX_VERTEX_NUM; i++) {
-		m_Vertices[i] = -1;
+		m_Vertices[i] = 0;
 	}
+
 	for (int i = 0; i < MAX_VERTEX_NUM; i++) {
 		for (int j = 0; j < MAX_VERTEX_NUM; j++) {
 			m_AdjMatrix[i][j] = false;
@@ -31,42 +29,28 @@ void CGameGraph::InitGraph()
 
 void CGameGraph::InitMap()
 {
-	nRows = CGameControl::s_nRows;
-	nCols = CGameControl::s_nCols;
-	nPicNum = CGameControl::s_nPicNum;
+	int pGameMap[MAX_VERTEX_NUM];
 
-	int* pGameMap;
-	pGameMap = new int[nRows * nCols];
-	memset(pGameMap, 0, sizeof(pGameMap));
-
-	if ((nRows * nCols) % (nPicNum * 2) != 0) {
-		delete[] pGameMap;
-		throw new CGameException(_T("游戏花色与游戏地图大小不匹配"));
-	}
-
-	int nRepeatNum = nRows * nCols / nPicNum;
-
-	int nCount = 0;
-
-	for (int i = 0; i < nPicNum; i++) {
-		for (int j = 0; j < nRepeatNum; j++) {
-			pGameMap[nCount++] = i;
+	for (int i = 0; i < MAX_PIC_NUM; i++) {
+		for (int j = 0; j < REPEAT_NUM; j++) {
+			pGameMap[i * REPEAT_NUM + j] = i;
 		}
 	}
 
 	srand((int)time(NULL));
 
-	int nVertexNum = nRows * nCols;
 
-	for (int i = 0; i < nVertexNum; i++) {
-		int nIndex1 = rand() % nVertexNum;
-		int nIndex2 = rand() % nVertexNum;
-		int  temp = pGameMap[nIndex1];
-		pGameMap[nIndex1] = pGameMap[nIndex2];
-		pGameMap[nIndex2] = temp;
+	for (int i = 0; i < 200; i++) {
+		int index1 = rand() % MAX_VERTEX_NUM;
+
+		int index2 = rand() % MAX_VERTEX_NUM;
+
+		int temp = pGameMap[index1];
+		pGameMap[index1] = pGameMap[index2];
+		pGameMap[index2] = temp;
 	}
 
-	for (int i = 0; i < nVertexNum; i++) {
+	for (int i = 0; i < MAX_VERTEX_NUM; i++) {
 		AddVertex(pGameMap[i]);
 	}
 
@@ -79,21 +63,19 @@ void CGameGraph::InitMap()
 
 void CGameGraph::ReleaseMap()
 {
-	if (m_Vertices != nullptr) {
-		delete[] m_Vertices;
-	}
+
 }
 
 void CGameGraph::Clear(Vertex v1, Vertex v2)
 {
 	int nIndex1 = v1.row * MAX_COL + v1.col;
 	int nIndex2 = v2.row * MAX_COL + v2.col;
-
+	//更新顶点
 	UpdateVertex(nIndex1, BLANK);
 	UpdateVertex(nIndex2, BLANK);
-
-	UpdateArc(v1.row, v1.col);
-	UpdateArc(v2.row, v2.col);
+	//更新边的信息
+	UpdateArc( v1.row, v1.col);
+	UpdateArc( v2.row, v2.col);
 }
 
 bool CGameGraph::IsLink(Vertex v1, Vertex v2)
@@ -101,20 +83,20 @@ bool CGameGraph::IsLink(Vertex v1, Vertex v2)
 	int nIndex1 = v1.row * MAX_COL + v1.col;
 	int nIndex2 = v2.row * MAX_COL + v2.col;
 
-	if (SearchPath( nIndex1, nIndex2) == true) {
+	//压入第一个点
+	PushVertex(nIndex1);
+	//如果两个点有边，可以相连
+	if (SearchValidPath(nIndex1, nIndex2)) {
 		PushVertex(nIndex2);
 		return true;
-
 	}
 	PopVertex();
-
 	return false;
 }
 
 bool CGameGraph::IsBlank()
 {
-	int nVexNum = m_nVexNum;
-	for (int i = 0; i < nVexNum; i++) {
+	for (int i = 0; i < m_nVexNum; i++) {
 		if (GetVertex(i) != BLANK) {
 			return false;
 		}
@@ -122,72 +104,102 @@ bool CGameGraph::IsBlank()
 	return true;
 }
 
-bool CGameGraph::SearchPath(int nV0, int nV1)
+bool CGameGraph::SearchValidPath(int nV0, int nV1)
 {
-	int nVexNum = m_nVexNum;
-
-	for (int nVi = 0; nVi < nVexNum; nVi++) {
-		if (GetArc(nV0, nVi) && IsExist(nVi)) {
+	//得到顶点数
+	int nVexnum = m_nVexNum;
+	//遍历图中nV0行，从0列到nVexnum列，值为true的点
+	for (int nVi = 0; nVi < nVexnum; nVi++)
+	{
+		if (GetArc(nV0, nVi) && !IsExist(nVi))
+		{
+			//压入当前顶点，假设为路径的一个有效顶点
 			PushVertex(nVi);
-			if (m_nCorner > 2) {
-				PopVertex();
+			//当拐点数大于2 时，直接放弃该顶点
+			if (m_nCorner > 2)
+			{
+				PopVertex();          //取出压入的顶点，与PushWertex(nVi)对应
 				continue;
 			}
-			if (nVi != nV1) {
-				if (GetVertex(nVi) != BLANK) {
-					PopVertex();
+			//当前顶点不是nVi时，继续搜寻下一个相邻且连通的顶点
+			if (nVi != nV1)
+			{
+				//当中间顶点不为空时，表示该条路径不通
+				if (GetVertex(nVi) != BLANK)
+				{
+					PopVertex();      //取出压入的顶点，与PushWertex(nVi)对应
 					continue;
 				}
-				if (SearchPath(nVi, nV1)) {
-					return  true;
+				//如果nVi是一个已消除的点，则判断（nVi，nV1）是否连通
+				if (SearchValidPath(nVi, nV1))
+				{
+					//SearchPath(garph, nVi, nV1) == true,表示已经找到一条连通路径，则返回true
+					return true;
 				}
 			}
-			else {
+			else
+			{
 				return true;
 			}
-			PopVertex();
+
+			PopVertex();     //取出压入的顶点，与PushWertex(nVi)对应
 		}
 	}
-
 	return false;
 }
 
 bool CGameGraph::SearchHelpPath()
 {
-	int nVexNum = m_nVexNum;
-
-	for (int i = 0; i < nVexNum; i++) {
-		if (GetVertex(i) == BLANK) {
+	//得到顶点数
+	int nVexnum = m_nVexNum;
+	for (int i = 0; i < nVexnum; i++)
+	{
+		//得到第一个非空顶点
+		if (GetVertex(i) == BLANK)
+		{
 			continue;
 		}
-		for (int j = 0; j < nVexNum; j++) {
-			if (i == j) {
-				continue;
-			}
-			if (GetVertex(i) == GetVertex(j)) {
-				PushVertex(i);
-				if (SearchPath( i, j)) {
-					return true;
+		//遍历得到第二个同色顶点
+		for (int j = 0; j < nVexnum; j++)
+		{
+			if (i != j)
+			{
+				//如果第i个点和第j个点同色
+				if (GetVertex(i) == GetVertex(j))
+				{
+					//压入第一个点
+					PushVertex(i);
+					if (SearchValidPath( i, j) == true)
+					{
+						return true;
+					}
+					//取出压入的顶点时，与PushVertex(i)对应
+					PopVertex();
 				}
-				PopVertex();
 			}
 		}
 	}
-
 	return false;
 }
 
 void CGameGraph::ResetGraph()
 {
-	srand((int)time(NULL));
-	for (int i = 0; i < 200; i++) {
+	//随机交换顶点数组中两个顶点的值
+	for (int i = 0; i < 2000; i++)
+	{
+		//随机得到两个坐标
 		int nIndex1 = rand() % MAX_VERTEX_NUM;
 		int nIndex2 = rand() % MAX_VERTEX_NUM;
+		//交换两个数值
 		ChangeVertex(nIndex1, nIndex2);
 	}
-	for (int i = 0; i < MAX_ROW; i++) {
-		for (int j = 0; j < MAX_COL; j++) {
-			UpdateArc(i, j);
+
+	//更新弧信息
+	for (int i = 0; i < MAX_ROW; i++)
+	{
+		for (int j = 0; j < MAX_COL; j++)
+		{
+			UpdateArc( i, j);
 		}
 	}
 }
@@ -195,25 +207,25 @@ void CGameGraph::ResetGraph()
 int CGameGraph::GetVexPath(Vertex avPath[4])
 {
 	Vertex point;
-
-	for (int i = 0; i < m_nVexNum; i++) {
-		for (point.col = 0; point.col < MAX_COL; point.col++) {
-			for (point.row = 0; point.row < MAX_ROW; point.row++) {
-				if (point.row * MAX_COL + point.col == m_anPath[i]) {
+	for (int i = 0; i < m_nStackVexNum; i++)
+		for (point.col = 0; point.col < MAX_COL; point.col++)
+		{
+			for (point.row = 0; point.row < MAX_ROW; point.row++)
+			{
+				if (point.row * MAX_COL + point.col == m_anPath[i])
+				{
 					avPath[i] = point;
 				}
 			}
 		}
-	}
-	return m_nVexNum;
+	return m_nStackVexNum;
 }
 
 void CGameGraph::PushVertex(int nIndex)
 {
-	m_anPath[m_nVexNum] = nIndex;
-	m_nVexNum++;
+	m_anPath[m_nStackVexNum++] = nIndex;
 	if (IsCorner()) {
-		m_nCorner++;
+		m_nCorner--;
 	}
 }
 
@@ -222,7 +234,7 @@ void CGameGraph::PopVertex()
 	if (IsCorner()) {
 		m_nCorner--;
 	}
-	m_nVexNum--;
+	m_nStackVexNum--;
 }
 
 int CGameGraph::AddVertex(int info)
@@ -238,7 +250,6 @@ int CGameGraph::AddVertex(int info)
 void CGameGraph::AddArc(int nIndex1, int nIndex2)
 {
 	m_AdjMatrix[nIndex1][nIndex2] = true;
-
 	m_AdjMatrix[nIndex2][nIndex1] = true;
 }
 
@@ -250,49 +261,54 @@ void CGameGraph::UpdateVertex(int index, int info)
 void CGameGraph::UpdateArc(int nRow, int nCol)
 {
 	int nIndex1 = nRow * MAX_COL + nCol;
-
-	//左边相邻
-	if (nCol > 0) {
+	if (nCol > 0)   //左边相邻
+	{
 		int nIndex2 = nIndex1 - 1;
 		int nInfo1 = GetVertex(nIndex1);
 		int nInfo2 = GetVertex(nIndex2);
-		if (nInfo1 == nInfo2 || nInfo1 == BLANK || nInfo2 == BLANK) {
+		//判断与左边相邻的是否有关系
+		if (nInfo1 == nInfo2 || nInfo1 == BLANK || nInfo2 == BLANK)
+		{
 			AddArc(nIndex1, nIndex2);
 		}
 	}
-	//右边相邻
-	if (nCol < MAX_COL - 1) {
+	if (nCol < MAX_COL - 1)   //右边相邻
+	{
 		int nV2Index = nIndex1 + 1;
 		int nV1Info = GetVertex(nIndex1);
 		int nV2Info = GetVertex(nV2Index);
 
-		if (nV1Info == nV2Info || nV1Info == BLANK || nV2Info == BLANK) {
+		//判断与右边相邻的是否有关系
+		if (nV1Info == nV2Info || nV1Info == BLANK || nV2Info == BLANK)
+		{
 			AddArc(nIndex1, nV2Index);
 		}
 	}
-
-	//正上方相邻
-	if (nRow > 0) {
+	if (nRow > 0)   //正上方相邻
+	{
 		int nV2Index = nIndex1 - MAX_COL;
-		int nInfo1 = GetVertex(nIndex1);
-		int nInfo2 = GetVertex(nV2Index);
+		int nV1Info = GetVertex(nIndex1);
+		int nV2Info = GetVertex(nV2Index);
 
-		if (nInfo1 == nInfo2 || nInfo1 == BLANK || nInfo2 == BLANK) {
+		//判断与正上方的是否有关系
+		if (nV1Info == nV2Info || nV1Info == BLANK || nV2Info == BLANK)
+		{
 			AddArc(nIndex1, nV2Index);
 		}
 	}
-	//正下方相邻	
-	if (nRow < MAX_ROW - 1) {
-		int nIndex2 = nIndex1 + MAX_COL;
-		int nInfo1 = GetVertex(nIndex1);
-		int nInfo2 = GetVertex(nIndex2);
+	if (nRow < MAX_ROW - 1)   //正下方相邻
+	{
+		int nV2Index = nIndex1 + MAX_COL;
+		int nV1Info = GetVertex(nIndex1);
+		int nV2Info = GetVertex(nV2Index);
 
-		if (nInfo1 == nInfo2 || nInfo1 == BLANK || nInfo2 == BLANK) {
-			AddArc(nIndex1, nIndex2);
+		//判断与正下方的是否有关系
+		if (nV1Info == nV2Info || nV1Info == BLANK || nV2Info == BLANK)
+		{
+			AddArc(nIndex1, nV2Index);
 		}
 	}
 }
-
 
 int CGameGraph::GetVertex(int nIndex)
 {
@@ -311,12 +327,11 @@ bool CGameGraph::GetArc(int nIndex1, int nIndex2)
 
 bool CGameGraph::IsExist(int nVi)
 {
-	for (int i = 0; i < m_nVexNum; i++) {
+	for (int i = 0; i < m_nStackVexNum; i++) {
 		if (m_anPath[i] == nVi) {
 			return true;
 		}
-	};
-
+	}
 	return false;
 }
 
@@ -329,10 +344,11 @@ void CGameGraph::ChangeVertex(int nIndex1, int nIndex2)
 
 bool CGameGraph::IsCorner()
 {
-	if (m_nVexNum >= 3) {
-		if ((m_anPath[m_nVexNum - 1] + m_anPath[m_nVexNum - 3]) / 2 != m_anPath[m_nVexNum - 2]) {
+	if (m_nStackVexNum >= 3) {
+		if ((m_anPath[m_nStackVexNum - 1] + m_anPath[m_nStackVexNum - 3]) / 2 != m_anPath[m_nStackVexNum - 2]) {
 			return true;
 		}
 	}
+
 	return false;
 }

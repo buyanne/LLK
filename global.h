@@ -20,11 +20,11 @@ public:
 };
 
 #define BLANK				-1		//判断是否为空
-#define MAX_ROW				15		//初始行数
-#define MAX_COL				14		//初始列数
-#define MAX_VERTEX_NUM      48		//顶点数
-#define MAX_PIC_NUM         15		//图片花色
-#define REPEAT_NUM          6		//每种花色图片个数
+#define MAX_ROW				16		//初始行数
+#define MAX_COL				12		//初始列数
+#define MAX_VERTEX_NUM      192		//顶点数
+#define MAX_PIC_NUM         12		//图片花色
+#define REPEAT_NUM          16		//每种花色图片个数
 #define MAP_TOP             50		//游戏地图左上角纵坐标
 #define MAP_LETF            50		//游戏地图左上角横坐标
 #define PIC_HEIGHT          40		//游戏地图高度

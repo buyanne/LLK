@@ -22,7 +22,7 @@ public:
 
     bool IsBlank();
 
-    bool SearchPath(int nIndex1, int nIndex2);
+    bool SearchValidPath(int nIndex1, int nIndex2);
 
     bool SearchHelpPath();
 
@@ -33,7 +33,6 @@ public:
     void PushVertex(int nIndex);
 
     void PopVertex();
-
 
     int AddVertex(int info);
 
@@ -58,12 +57,14 @@ public:
 
 public:
     typedef int Vertices[MAX_VERTEX_NUM];
-    typedef bool AdjMatrix[MAX_VERTEX_NUM][MAX_VERTEX_NUM];
+    typedef bool AdjMatrix[MAX_VERTEX_NUM<<2][MAX_VERTEX_NUM<<2];
 public:
     Vertices m_Vertices{};
     AdjMatrix m_AdjMatrix{};
     int m_nVexNum;
     int m_nArcNum;
+    int m_nStackVexNum;
+
 
     int m_anPath[100];
     int m_nCorner;

@@ -1,11 +1,11 @@
 #pragma once
 #ifndef CGAMECONTROL
 #define CGAMECONTROL
-#include"CGameLogic.h"
-#include "CGraph.h"
+
 #include "Base.h"
 #include"CGameMap.h"
 #include"CGameGraph.h"
+#include "global.h"
 
 class CGameControl
 {
@@ -16,7 +16,6 @@ public:
 
 	Base* base = new CGameGraph();
 
-	//CGraph m_graph;
 
 	// the first selected vertex
 	Vertex m_svSelFst;
