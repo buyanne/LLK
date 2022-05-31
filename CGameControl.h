@@ -5,6 +5,7 @@
 #include "CGraph.h"
 #include "Base.h"
 #include"CGameMap.h"
+#include"CGameGraph.h"
 
 class CGameControl
 {
@@ -13,9 +14,9 @@ public:
 	static int s_nCols;
 	static int s_nPicNum;
 
-	Base* base = new CGameMap();
+	Base* base = new CGameGraph();
 
-	CGraph m_graph;
+	//CGraph m_graph;
 
 	// the first selected vertex
 	Vertex m_svSelFst;

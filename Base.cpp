@@ -3,6 +3,9 @@
 
 Base::Base()
 {
+	nCols = 0;
+	nRows = 0;
+	nPicNum = 0;
 }
 
 Base::~Base()
@@ -56,7 +59,7 @@ int Base::GetVexPath(Vertex avPath[4])
 	return 0;
 }
 
-int Base::GetElement(int nRow, int nCol)
+int Base::GetElement(int row, int col)
 {
 	return 0;
 }
@@ -65,25 +68,12 @@ void Base::ClearStack()
 {
 }
 
-int Base::AddVertex(int info)
-{
-	return 0;
-}
-
-void Base::UpdateVertex(int nIndex, int info)
+void Base::UpdateArc(int row,int col)
 {
 }
-
 
 int Base::GetVertex(int nIndex)
 {
 	return 0;
 }
 
-void Base::AddArc(int nV1Index, int nV2Index)
-{
-}
-
-void Base::UpdateArc(int row, int col)
-{
-}

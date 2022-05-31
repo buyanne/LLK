@@ -10,6 +10,8 @@ public:
 
 public:
 
+    void InitGraph();
+
     void InitMap();
 
     void ReleaseMap();
@@ -19,6 +21,8 @@ public:
     bool IsLink(Vertex v1, Vertex v2);
 
     bool IsBlank();
+
+    bool SearchPath(int nIndex1, int nIndex2);
 
     bool SearchHelpPath();
 
@@ -30,13 +34,22 @@ public:
 
     void PopVertex();
 
-    void ClearStack();
 
     int AddVertex(int info);
 
+    void AddArc(int nIndex1, int nIndex2);
+
     void UpdateVertex(int index, int info);
 
+    void UpdateArc(int nRow, int nCol);
+
     int GetVertex(int nIndex);
+
+    int GetElement(int row, int col);
+
+    bool GetArc(int nIndex1, int nIndex2);
+
+    bool IsExist(int nVi);
 
     void ChangeVertex(int nIndex1, int nIndex2);
 
@@ -47,15 +60,12 @@ public:
     typedef int Vertices[MAX_VERTEX_NUM];
     typedef bool AdjMatrix[MAX_VERTEX_NUM][MAX_VERTEX_NUM];
 public:
-    Vertices m_Vertices;
-    AdjMatrix m_AdjMatrix;
+    Vertices m_Vertices{};
+    AdjMatrix m_AdjMatrix{};
     int m_nVexNum;
     int m_nArcNum;
 
     int m_anPath[100];
     int m_nCorner;
-    /*int nRows;
-    int nCols;
-    int nPicNum;*/
 };
 

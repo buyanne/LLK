@@ -3,10 +3,30 @@
 
 CGameGraph::CGameGraph()
 {
+	m_nArcNum = 0;
+	m_nCorner = 0;
+	m_nVexNum = 0;
+	InitGraph();
+	
 }
 
 CGameGraph::~CGameGraph()
 {
+	ReleaseMap();
+}
+
+
+
+void CGameGraph::InitGraph()
+{
+	for (int i = 0; i < MAX_VERTEX_NUM; i++) {
+		m_Vertices[i] = -1;
+	}
+	for (int i = 0; i < MAX_VERTEX_NUM; i++) {
+		for (int j = 0; j < MAX_VERTEX_NUM; j++) {
+			m_AdjMatrix[i][j] = false;
+		}
+	}
 }
 
 void CGameGraph::InitMap()
@@ -15,7 +35,9 @@ void CGameGraph::InitMap()
 	nCols = CGameControl::s_nCols;
 	nPicNum = CGameControl::s_nPicNum;
 
-	int* pGameMap = new int[nRows * nCols];
+	int* pGameMap;
+	pGameMap = new int[nRows * nCols];
+	memset(pGameMap, 0, sizeof(pGameMap));
 
 	if ((nRows * nCols) % (nPicNum * 2) != 0) {
 		delete[] pGameMap;
@@ -57,8 +79,9 @@ void CGameGraph::InitMap()
 
 void CGameGraph::ReleaseMap()
 {
-	
-	
+	if (m_Vertices != nullptr) {
+		delete[] m_Vertices;
+	}
 }
 
 void CGameGraph::Clear(Vertex v1, Vertex v2)
@@ -97,6 +120,36 @@ bool CGameGraph::IsBlank()
 		}
 	}
 	return true;
+}
+
+bool CGameGraph::SearchPath(int nV0, int nV1)
+{
+	int nVexNum = m_nVexNum;
+
+	for (int nVi = 0; nVi < nVexNum; nVi++) {
+		if (GetArc(nV0, nVi) && IsExist(nVi)) {
+			PushVertex(nVi);
+			if (m_nCorner > 2) {
+				PopVertex();
+				continue;
+			}
+			if (nVi != nV1) {
+				if (GetVertex(nVi) != BLANK) {
+					PopVertex();
+					continue;
+				}
+				if (SearchPath(nVi, nV1)) {
+					return  true;
+				}
+			}
+			else {
+				return true;
+			}
+			PopVertex();
+		}
+	}
+
+	return false;
 }
 
 bool CGameGraph::SearchHelpPath()
@@ -141,7 +194,18 @@ void CGameGraph::ResetGraph()
 
 int CGameGraph::GetVexPath(Vertex avPath[4])
 {
-	return 0;
+	Vertex point;
+
+	for (int i = 0; i < m_nVexNum; i++) {
+		for (point.col = 0; point.col < MAX_COL; point.col++) {
+			for (point.row = 0; point.row < MAX_ROW; point.row++) {
+				if (point.row * MAX_COL + point.col == m_anPath[i]) {
+					avPath[i] = point;
+				}
+			}
+		}
+	}
+	return m_nVexNum;
 }
 
 void CGameGraph::PushVertex(int nIndex)
@@ -161,11 +225,6 @@ void CGameGraph::PopVertex()
 	m_nVexNum--;
 }
 
-void CGameGraph::ClearStack()
-{
-	m_nVexNum = 0;
-}
-
 int CGameGraph::AddVertex(int info)
 {
 	if (m_nVexNum >= MAX_VERTEX_NUM) {
@@ -176,8 +235,62 @@ int CGameGraph::AddVertex(int info)
 	return m_nVexNum;
 }
 
+void CGameGraph::AddArc(int nIndex1, int nIndex2)
+{
+	m_AdjMatrix[nIndex1][nIndex2] = true;
+
+	m_AdjMatrix[nIndex2][nIndex1] = true;
+}
+
 void CGameGraph::UpdateVertex(int index, int info)
 {
+	m_Vertices[index] = info;
+}
+
+void CGameGraph::UpdateArc(int nRow, int nCol)
+{
+	int nIndex1 = nRow * MAX_COL + nCol;
+
+	//左边相邻
+	if (nCol > 0) {
+		int nIndex2 = nIndex1 - 1;
+		int nInfo1 = GetVertex(nIndex1);
+		int nInfo2 = GetVertex(nIndex2);
+		if (nInfo1 == nInfo2 || nInfo1 == BLANK || nInfo2 == BLANK) {
+			AddArc(nIndex1, nIndex2);
+		}
+	}
+	//右边相邻
+	if (nCol < MAX_COL - 1) {
+		int nV2Index = nIndex1 + 1;
+		int nV1Info = GetVertex(nIndex1);
+		int nV2Info = GetVertex(nV2Index);
+
+		if (nV1Info == nV2Info || nV1Info == BLANK || nV2Info == BLANK) {
+			AddArc(nIndex1, nV2Index);
+		}
+	}
+
+	//正上方相邻
+	if (nRow > 0) {
+		int nV2Index = nIndex1 - MAX_COL;
+		int nInfo1 = GetVertex(nIndex1);
+		int nInfo2 = GetVertex(nV2Index);
+
+		if (nInfo1 == nInfo2 || nInfo1 == BLANK || nInfo2 == BLANK) {
+			AddArc(nIndex1, nV2Index);
+		}
+	}
+	//正下方相邻	
+	if (nRow < MAX_ROW - 1) {
+		int nIndex2 = nIndex1 + MAX_COL;
+		int nInfo1 = GetVertex(nIndex1);
+		int nInfo2 = GetVertex(nIndex2);
+
+		if (nInfo1 == nInfo2 || nInfo1 == BLANK || nInfo2 == BLANK) {
+			AddArc(nIndex1, nIndex2);
+		}
+	}
 }
 
 
@@ -186,11 +299,40 @@ int CGameGraph::GetVertex(int nIndex)
 	return m_Vertices[nIndex];
 }
 
+int CGameGraph::GetElement(int row, int col)
+{
+	return GetVertex(row * MAX_COL + col);
+}
+
+bool CGameGraph::GetArc(int nIndex1, int nIndex2)
+{
+	return m_AdjMatrix[nIndex1][nIndex2];
+}
+
+bool CGameGraph::IsExist(int nVi)
+{
+	for (int i = 0; i < m_nVexNum; i++) {
+		if (m_anPath[i] == nVi) {
+			return true;
+		}
+	};
+
+	return false;
+}
+
 void CGameGraph::ChangeVertex(int nIndex1, int nIndex2)
 {
+	int temp = m_Vertices[nIndex1];
+	m_Vertices[nIndex1] = m_Vertices[nIndex2];
+	m_Vertices[nIndex2] = temp;
 }
 
 bool CGameGraph::IsCorner()
 {
+	if (m_nVexNum >= 3) {
+		if ((m_anPath[m_nVexNum - 1] + m_anPath[m_nVexNum - 3]) / 2 != m_anPath[m_nVexNum - 2]) {
+			return true;
+		}
+	}
 	return false;
 }

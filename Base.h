@@ -27,20 +27,12 @@ public:
 
 	virtual int GetVexPath(Vertex avPath[4]);
 
-	virtual int GetElement(int nRow, int nCol);
+	virtual int GetElement(int row, int col);
 
 	virtual void ClearStack();
 
-	virtual int AddVertex(int info);
-
-	virtual void UpdateVertex(int nIndex, int info);
+	virtual void UpdateArc(int row,int col);
 
 	virtual int GetVertex(int nIndex);
-
-	virtual void AddArc(int nV1Index,int nV2Index);
-
-	virtual void UpdateArc(int row, int col);
-
-	
 };
 

@@ -39,6 +39,10 @@ CGameDlg::CGameDlg(CWnd* pParent /*=nullptr*/)
 
 	m_bModule = LEISURE_MODE;
 
+	m_bLevelModule = false;
+
+	timeCount = 0;
+
 }
 
 CGameDlg::~CGameDlg()
