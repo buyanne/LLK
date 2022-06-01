@@ -69,6 +69,9 @@ BEGIN_MESSAGE_MAP(CLLKDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BTN_BASIC, &CLLKDlg::OnClickedBtnBasic)
 	ON_BN_CLICKED(IDC_BTN_RELAX, &CLLKDlg::OnClickedBtnRelax)
 	ON_BN_CLICKED(IDC_BTN_LEVEL, &CLLKDlg::OnClickedBtnLevel)
+	ON_BN_CLICKED(IDC_BTN_HELP, &CLLKDlg::OnClickedBtnHelp)
+	ON_BN_CLICKED(IDC_BTN_RANK, &CLLKDlg::OnClickedBtnRank)
+	ON_BN_CLICKED(IDC_BTN_SETTING, &CLLKDlg::OnClickedBtnSetting)
 END_MESSAGE_MAP()
 
 
@@ -234,4 +237,30 @@ void CLLKDlg::OnClickedBtnLevel()
 	dlg.DoModal();
 
 	this->ShowWindow(SW_SHOW);
+}
+
+
+void CLLKDlg::OnClickedBtnHelp()
+{
+	// TODO: Add your control notification handler code here
+
+	MessageBox(_T("帮助栏\n"
+		"1)游戏开始之后不可重新开始只可重新排列图案\n"
+		"2)点击暂停游戏使游戏中断，暂停时不可点击提示和重排按键，可再次点击暂停游戏继续游戏\n"
+		"3)点击提示按钮可以显示一个自上而下的第一对可连接的图案\n"
+		"4)点击重排可对剩下图形进行随机重排序，其中已经消除方块不会重新出现"));
+}
+
+
+void CLLKDlg::OnClickedBtnRank()
+{
+	// TODO: Add your control notification handler code here
+	MessageBox(_T("这是排行榜"));
+}
+
+
+void CLLKDlg::OnClickedBtnSetting()
+{
+	// TODO: Add your control notification handler code here
+	MessageBox(_T("这是设置框"));
 }

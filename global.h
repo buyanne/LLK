@@ -29,7 +29,7 @@ public:
 #define MAP_LETF            50		//游戏地图左上角横坐标
 #define PIC_HEIGHT          40		//游戏地图高度
 #define PIC_WIDTH           40		//游戏地图宽度
-#define MAX_TIME			180
+#define MAX_TIME			300
 //设置不同的游戏界面
 #define LEISURE_MODE		10
 #define BASIC_MODE			20

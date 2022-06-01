@@ -63,7 +63,6 @@ void CGameGraph::InitMap()
 
 void CGameGraph::ReleaseMap()
 {
-
 }
 
 void CGameGraph::Clear(Vertex v1, Vertex v2)
@@ -76,6 +75,20 @@ void CGameGraph::Clear(Vertex v1, Vertex v2)
 	//更新边的信息
 	UpdateArc( v1.row, v1.col);
 	UpdateArc( v2.row, v2.col);
+}
+
+void CGameGraph::ClearMap()
+{
+	int nVexNum = nRows * nCols;
+	for (int i = 0; i < nVexNum; i++) {
+		m_Vertices[i] = BLANK;
+	}
+}
+
+void CGameGraph::ClearStack()
+{
+	m_nStackVexNum = 0;
+	m_nCorner = 0;
 }
 
 bool CGameGraph::IsLink(Vertex v1, Vertex v2)
@@ -162,20 +175,20 @@ bool CGameGraph::SearchHelpPath()
 		//遍历得到第二个同色顶点
 		for (int j = 0; j < nVexnum; j++)
 		{
-			if (i != j)
+			if (i == j) {
+				continue;
+			}
+			//如果第i个点和第j个点同色
+			if (GetVertex(i) == GetVertex(j))
 			{
-				//如果第i个点和第j个点同色
-				if (GetVertex(i) == GetVertex(j))
+				//压入第一个点
+				PushVertex(i);
+				if (SearchValidPath(i, j) == true)
 				{
-					//压入第一个点
-					PushVertex(i);
-					if (SearchValidPath( i, j) == true)
-					{
-						return true;
-					}
-					//取出压入的顶点时，与PushVertex(i)对应
-					PopVertex();
+					return true;
 				}
+				//取出压入的顶点时，与PushVertex(i)对应
+				PopVertex();
 			}
 		}
 	}
@@ -223,9 +236,12 @@ int CGameGraph::GetVexPath(Vertex avPath[4])
 
 void CGameGraph::PushVertex(int nIndex)
 {
-	m_anPath[m_nStackVexNum++] = nIndex;
-	if (IsCorner()) {
-		m_nCorner--;
+	m_anPath[m_nStackVexNum] = nIndex;
+	m_nStackVexNum++;
+	//判断是否形成新的拐点
+	if (IsCorner())
+	{
+		m_nCorner++;
 	}
 }
 
@@ -344,11 +360,13 @@ void CGameGraph::ChangeVertex(int nIndex1, int nIndex2)
 
 bool CGameGraph::IsCorner()
 {
-	if (m_nStackVexNum >= 3) {
-		if ((m_anPath[m_nStackVexNum - 1] + m_anPath[m_nStackVexNum - 3]) / 2 != m_anPath[m_nStackVexNum - 2]) {
+	//判断最近加入栈的三个节点是否存在拐点
+	if (m_nStackVexNum >= 3)
+	{
+		if ((m_anPath[m_nStackVexNum - 1] + m_anPath[m_nStackVexNum - 3]) / 2 != m_anPath[m_nStackVexNum - 2])
+		{
 			return true;
 		}
 	}
-
 	return false;
 }

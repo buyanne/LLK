@@ -7,7 +7,7 @@ public:
 	}
 
 	CGameException(CString s) {
-
+		
 	}
 };
 

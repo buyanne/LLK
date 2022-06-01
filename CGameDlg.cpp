@@ -147,34 +147,24 @@ void CGameDlg::OnClickedBtnStartgame() {
 	m_gameControl.StartGame();
 	m_bPlaying = true;
 	UpdateMap();
-	InvalidateRect(FALSE);
+	InvalidateRect(m_rtGameRect,false	);
 	if (m_bModule == BASIC_MODE) {
-		this->GetDlgItem(IDC_BTN_STARTGAME)->EnableWindow(FALSE);
-
-		this->GetDlgItem(IDC_BTN_GAMETIPS)->EnableWindow(TRUE);
-		this->GetDlgItem(IDC_BTN_RELOADMAP)->EnableWindow(TRUE);
-		
-		this->GetDlgItem(IDC_BTN_PAUSEGAME)->EnableWindow(TRUE);
-
 		this->SetTimer(1, 1000, NULL);
 		this->GetDlgItem(IDC_EDIT_TIME)->EnableWindow(TRUE);
 	}
 	else if (m_bModule == LEISURE_MODE) {
-		this->GetDlgItem(IDC_BTN_STARTGAME)->EnableWindow(FALSE);
-
-		this->GetDlgItem(IDC_BTN_GAMETIPS)->EnableWindow(TRUE);
-		this->GetDlgItem(IDC_BTN_RELOADMAP)->EnableWindow(TRUE);
-		this->GetDlgItem(IDC_BTN_PAUSEGAME)->EnableWindow(TRUE);
-
-
+		// TODO..
 	}
 	else {
-		this->GetDlgItem(IDC_BTN_STARTGAME)->EnableWindow(FALSE);
-
-		this->GetDlgItem(IDC_BTN_GAMETIPS)->EnableWindow(TRUE);
-		this->GetDlgItem(IDC_BTN_RELOADMAP)->EnableWindow(TRUE);
-		this->GetDlgItem(IDC_BTN_PAUSEGAME)->EnableWindow(TRUE);
+		// TODO..
+		
 	}
+	this->GetDlgItem(IDC_BTN_STARTGAME)->EnableWindow(FALSE);
+	this->GetDlgItem(IDC_BTN_GAMETIPS)->EnableWindow(TRUE);
+	this->GetDlgItem(IDC_BTN_RELOADMAP)->EnableWindow(TRUE);
+
+	this->GetDlgItem(IDC_BTN_PAUSEGAME)->EnableWindow(TRUE);
+	this->GetDlgItem(IDC_BTN_GAMESETTING)->EnableWindow(FALSE);
 
 }
 
@@ -300,6 +290,7 @@ void CGameDlg::OnLButtonUp(UINT nFlags, CPoint point)
 			this->GetDlgItem(IDC_BTN_GAMETIPS)->EnableWindow(FALSE);
 			this->GetDlgItem(IDC_BTN_RELOADMAP)->EnableWindow(FALSE);
 			this->GetDlgItem(IDC_BTN_PAUSEGAME)->EnableWindow(FALSE);
+			this->GetDlgItem(IDC_BTN_SETTING)->EnableWindow(TRUE);
 			m_bPlaying = false;
 			return;
 		}
@@ -363,7 +354,7 @@ void CGameDlg::OnClickedBtnGametips()
 		DrawTipFrame(avPath[nVexNum - 1].row, avPath[nVexNum - 1].col);
 		//画提示线
 		DrawTipLine(avPath, nVexNum);
-		Sleep(1000);    //延迟
+		Sleep(500);    //延迟
 		UpdateMap();	//更新地图
 		InvalidateRect(m_rtGameRect, FALSE);
 	}
@@ -410,7 +401,7 @@ void CGameDlg::OnClickedBtnHelpingame()
 		"1)游戏开始之后不可重新开始只可重新排列图案\n"
 		"2)点击暂停游戏使游戏中断，暂停时不可点击提示和重排按键，可再次点击暂停游戏继续游戏\n"
 		"3)点击提示按钮可以显示一个自上而下的第一对可连接的图案\n"
-		"4)点击重排可对剩下图形进行随机重排序，其中以消除方块不会重新出现"));
+		"4)点击重排可对剩下图形进行随机重排序，其中已消除方块不会重新出现"));
 }
 
 
@@ -448,9 +439,22 @@ void CGameDlg::OnTimer(UINT_PTR nIDEvent)
 				this->GetDlgItem(IDC_BTN_PAUSEGAME)->EnableWindow(FALSE);
 			}
 			if (timeCount == 0) {
+
 				KillTimer(1);
+				CString s;
+				s.Format(_T("%d"), 0);
+				SetDlgItemText(IDC_EDIT_TIME, s);
+				UpdateData(FALSE);
+				
 				m_gameControl.Lose();
+				
 				UpdateMap();
+				InvalidateRect(m_rtGameRect, false);
+				this->GetDlgItem(IDC_BTN_STARTGAME)->EnableWindow(TRUE);
+				this->GetDlgItem(IDC_BTN_GAMETIPS)->EnableWindow(FALSE);
+				this->GetDlgItem(IDC_BTN_RELOADMAP)->EnableWindow(FALSE);
+				this->GetDlgItem(IDC_BTN_PAUSEGAME)->EnableWindow(FALSE);
+				this->GetDlgItem(IDC_BTN_SETTING)->EnableWindow(TRUE);
 				MessageBox(
 					_T("很遗憾超时了")
 				);

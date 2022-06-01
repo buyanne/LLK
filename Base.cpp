@@ -25,6 +25,10 @@ void Base::Clear(Vertex v1, Vertex v2)
 
 }
 
+void Base::ClearMap()
+{
+}
+
 bool Base::IsLink(Vertex v1, Vertex v2)
 {
 	return false;

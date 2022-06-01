@@ -18,6 +18,10 @@ public:
 
     void Clear(Vertex v1, Vertex v2);
 
+    void ClearMap();
+
+    void ClearStack();
+
     bool IsLink(Vertex v1, Vertex v2);
 
     bool IsBlank();

@@ -16,6 +16,8 @@ public:
 
 	virtual void Clear(Vertex v1,Vertex v2);
 
+	virtual void ClearMap();
+
 	virtual bool IsLink(Vertex v1, Vertex v2);
 
 	virtual bool IsBlank();

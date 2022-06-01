@@ -28,6 +28,7 @@ CGameControl::~CGameControl()
 {
 	//m_GameLogic.ReleaseMap(m_pGameMap);
 	base->ReleaseMap();
+	delete base;
 }
 
 void CGameControl::SetFirstPoint(int nRow, int nCol)
@@ -130,6 +131,7 @@ bool CGameControl::IsWin(void)
 void CGameControl::Lose()
 {
 	/*m_GameLogic.ClearMap(m_pGameMap);*/
+	base->ClearMap();
 }
 
 
