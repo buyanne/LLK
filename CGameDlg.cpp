@@ -50,11 +50,6 @@ CGameDlg::~CGameDlg()
 
 }
 
-//void CGameDlg::DoDataExchange(CDataExchange* pDX)
-//{
-//	CDialogEx::DoDataExchange(pDX);
-//}
-
 
 BEGIN_MESSAGE_MAP(CGameDlg, CDialogEx)
 	ON_WM_PAINT()
