@@ -3,8 +3,7 @@
 
 #include "pch.h"
 #include "LLK.h"
-#include<iostream>
-using namespace std;
+#include"CGameSetingDlg.h"
 
 
 
@@ -139,10 +138,11 @@ BOOL CGameDlg::OnInitDialog()
 
 void CGameDlg::OnClickedBtnStartgame() {
 	timeCount = MAX_TIME;
+	
 	m_gameControl.StartGame();
 	m_bPlaying = true;
 	UpdateMap();
-	InvalidateRect(m_rtGameRect,false	);
+	Invalidate(FALSE);
 	if (m_bModule == BASIC_MODE) {
 		this->SetTimer(1, 1000, NULL);
 		this->GetDlgItem(IDC_EDIT_TIME)->EnableWindow(TRUE);
@@ -208,7 +208,6 @@ void CGameDlg::InitElement()
 	m_dcMask.CreateCompatibleDC(&dc);
 
 	m_dcMask.SelectObject(hMask);
-
 }
 
 
@@ -325,6 +324,7 @@ void CGameDlg::DrawTipLine(Vertex avPath[4], int nVexNum)
 }
 
 
+
 void CGameDlg::OnClickedBtnReloadmap()
 {
 	// TODO: Add your control notification handler code here
@@ -384,7 +384,9 @@ void CGameDlg::OnClickedBtnGamesetting()
 {
 	// TODO: Add your control notification handler code here
 
-	MessageBox(_T("’‚ «…Ë÷√øÚ"));
+	CGameSetingDlg dlg;
+	dlg.DoModal();
+	
 }
 
 

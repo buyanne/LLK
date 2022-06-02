@@ -8,10 +8,13 @@
 #include "LLKDlg.h"
 #include "afxdialogex.h"
 
+#include"CGameRanking.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 #include "CGameDlg.h"
+#include "CGameSetingDlg.h"
 
 
 // CAboutDlg dialog used for App About
@@ -205,8 +208,8 @@ void CLLKDlg::OnClickedBtnBasic()
 	// TODO: Add your control notification handler code here
 
 	this->ShowWindow(SW_HIDE);
-
 	CGameDlg dlg;
+	/*CGameDlg dlg;*/
 	dlg.setModule(BASIC_MODE);
 	dlg.DoModal();
 
@@ -218,9 +221,9 @@ void CLLKDlg::OnClickedBtnRelax()
 {
 	// TODO: Add your control notification handler code here
 	this->ShowWindow(SW_HIDE);
-	CGameDlg dlg;
+	/*CGameDlg dlg;*/
 	
-
+	CGameDlg dlg;
 	dlg.setModule(LEISURE_MODE);
 	dlg.DoModal();
 	
@@ -232,6 +235,7 @@ void CLLKDlg::OnClickedBtnLevel()
 {
 	// TODO: Add your control notification handler code here
 	this->ShowWindow(SW_HIDE);
+	/*CGameDlg dlg;*/
 	CGameDlg dlg;
 	dlg.setModule(BREAKTHROUGH_MODE);
 	dlg.DoModal();
@@ -255,12 +259,14 @@ void CLLKDlg::OnClickedBtnHelp()
 void CLLKDlg::OnClickedBtnRank()
 {
 	// TODO: Add your control notification handler code here
-	MessageBox(_T("这是排行榜"));
+	CGameRanking dlg;
+	dlg.DoModal();
 }
 
 
 void CLLKDlg::OnClickedBtnSetting()
 {
 	// TODO: Add your control notification handler code here
-	MessageBox(_T("这是设置框"));
+	/*MessageBox(_T("这是设置框"));*/
+	settingDlg.DoModal();
 }

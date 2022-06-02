@@ -2,12 +2,8 @@
 class CGameException
 {
 public:
-	CGameException() {
+	CGameException();
 
-	}
-
-	CGameException(CString s) {
-		
-	}
+	CGameException(CString s);
 };
 

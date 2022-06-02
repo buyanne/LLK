@@ -1,6 +1,7 @@
 #pragma once
 #include "afxdialogex.h"
 #include"pch.h"
+#include"CGameSetingDlg.h"
 
 // CGameDlg dialog
 
@@ -56,10 +57,13 @@ protected:
 
 	CGameControl m_gameControl;
 
+	
+
 	void InitBackground();
 	void InitElement();
 
 public:
+
 	virtual BOOL OnInitDialog();
 	afx_msg void OnPaint();
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);

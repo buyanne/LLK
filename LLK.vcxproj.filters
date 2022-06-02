@@ -54,6 +54,12 @@
     <ClInclude Include="CGameGraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CGameSetingDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameRanking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LLK.cpp">
@@ -81,6 +87,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CGameGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameSetingDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameRanking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
