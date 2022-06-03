@@ -36,11 +36,9 @@ protected:
 
 protected:
 	CDC m_dcMem;
-
-
-	CGameSetingDlg settingDlg;
-
 	void InitBackground();
+
+	int background;
 
 public:
 	afx_msg void OnClickedBtnBasic();
@@ -53,6 +51,5 @@ public:
 	afx_msg void OnClickedBtnHelp();
 	afx_msg void OnClickedBtnRank();
 	afx_msg void OnClickedBtnSetting();
-
-
+	int level;
 };

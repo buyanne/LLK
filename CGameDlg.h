@@ -63,7 +63,7 @@ protected:
 	void InitElement();
 
 public:
-
+	int level;
 	virtual BOOL OnInitDialog();
 	afx_msg void OnPaint();
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
@@ -81,5 +81,4 @@ public:
 	void UpdateMap();
 	void DrawTipFrame(int nRow, int nCol);
 	void DrawTipLine(Vertex avPath[4], int nVexNum);	
-	
 };

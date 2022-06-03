@@ -30,4 +30,6 @@ public:
 	afx_msg void OnClickedButtonSamplelevel();
 	afx_msg void OnClickedButtonMiddlelevel();
 	afx_msg void OnClickedButtonDifficultlevel();
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton2();
 };

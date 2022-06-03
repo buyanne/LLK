@@ -8,7 +8,7 @@
 #include "LLKDlg.h"
 #include "afxdialogex.h"
 
-#include"CGameRanking.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -211,6 +211,7 @@ void CLLKDlg::OnClickedBtnBasic()
 	CGameDlg dlg;
 	/*CGameDlg dlg;*/
 	dlg.setModule(BASIC_MODE);
+	dlg.level = level;
 	dlg.DoModal();
 
 	this->ShowWindow(SW_SHOW);
@@ -225,6 +226,7 @@ void CLLKDlg::OnClickedBtnRelax()
 	
 	CGameDlg dlg;
 	dlg.setModule(LEISURE_MODE);
+	dlg.level = level;
 	dlg.DoModal();
 	
 	this->ShowWindow(SW_SHOW);
@@ -238,6 +240,7 @@ void CLLKDlg::OnClickedBtnLevel()
 	/*CGameDlg dlg;*/
 	CGameDlg dlg;
 	dlg.setModule(BREAKTHROUGH_MODE);
+	dlg.level = level;
 	dlg.DoModal();
 
 	this->ShowWindow(SW_SHOW);
@@ -259,14 +262,16 @@ void CLLKDlg::OnClickedBtnHelp()
 void CLLKDlg::OnClickedBtnRank()
 {
 	// TODO: Add your control notification handler code here
-	CGameRanking dlg;
-	dlg.DoModal();
+
 }
 
 
-void CLLKDlg::OnClickedBtnSetting()
+void CLLKDlg::OnClickedBtnSetting ()
 {
 	// TODO: Add your control notification handler code here
 	/*MessageBox(_T("’‚ «…Ë÷√øÚ"));*/
+	CGameSetingDlg settingDlg;
 	settingDlg.DoModal();
+
+	level = settingDlg.m_bLevel;
 }

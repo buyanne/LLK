@@ -65,3 +65,16 @@ void CGameSetingDlg::OnClickedButtonDifficultlevel()
 	SetLevel(3);
 	EndDialog(0);
 }
+
+
+void CGameSetingDlg::OnBnClickedButton1()
+{
+	// TODO: Add your control notification handler code here
+
+}
+
+
+void CGameSetingDlg::OnBnClickedButton2()
+{
+	// TODO: Add your control notification handler code here
+}

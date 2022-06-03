@@ -189,7 +189,6 @@
     <ClInclude Include="CGameException.h" />
     <ClInclude Include="CGameGraph.h" />
     <ClInclude Include="CGameMap.h" />
-    <ClInclude Include="CGameRanking.h" />
     <ClInclude Include="CGameSetingDlg.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="global.h" />
@@ -206,7 +205,6 @@
     <ClCompile Include="CGameException.cpp" />
     <ClCompile Include="CGameGraph.cpp" />
     <ClCompile Include="CGameMap.cpp" />
-    <ClCompile Include="CGameRanking.cpp" />
     <ClCompile Include="CGameSetingDlg.cpp" />
     <ClCompile Include="LLK.cpp" />
     <ClCompile Include="LLKDlg.cpp" />

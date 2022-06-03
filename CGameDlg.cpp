@@ -40,7 +40,9 @@ CGameDlg::CGameDlg(CWnd* pParent /*=nullptr*/)
 
 	m_bLevelModule = false;
 
-	timeCount = 0;
+	if (timeCount == 0) {
+		timeCount == MAX_TIME;
+	}
 
 }
 
@@ -137,10 +139,17 @@ BOOL CGameDlg::OnInitDialog()
 }
 
 void CGameDlg::OnClickedBtnStartgame() {
-	timeCount = MAX_TIME;
-	
 	m_gameControl.StartGame();
 	m_bPlaying = true;
+	if (level == 1) {
+		timeCount = 300;
+	}
+	else if (level == 2) {
+		timeCount = 250;
+	}
+	else {
+		timeCount = 200;
+	}
 	UpdateMap();
 	Invalidate(FALSE);
 	if (m_bModule == BASIC_MODE) {
@@ -324,7 +333,6 @@ void CGameDlg::DrawTipLine(Vertex avPath[4], int nVexNum)
 }
 
 
-
 void CGameDlg::OnClickedBtnReloadmap()
 {
 	// TODO: Add your control notification handler code here
@@ -386,6 +394,9 @@ void CGameDlg::OnClickedBtnGamesetting()
 
 	CGameSetingDlg dlg;
 	dlg.DoModal();
+
+	level = dlg.m_bLevel;
+	
 	
 }
 
