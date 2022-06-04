@@ -15,6 +15,7 @@
 #endif
 #include "CGameDlg.h"
 #include "CGameSetingDlg.h"
+#include "CGameRankDlg.h"
 
 
 // CAboutDlg dialog used for App About
@@ -214,6 +215,7 @@ void CLLKDlg::OnClickedBtnBasic()
 	dlg.level = level;
 	dlg.DoModal();
 
+
 	this->ShowWindow(SW_SHOW);
 }
 
@@ -228,7 +230,7 @@ void CLLKDlg::OnClickedBtnRelax()
 	dlg.setModule(LEISURE_MODE);
 	dlg.level = level;
 	dlg.DoModal();
-	
+
 	this->ShowWindow(SW_SHOW);
 }
 
@@ -263,6 +265,10 @@ void CLLKDlg::OnClickedBtnRank()
 {
 	// TODO: Add your control notification handler code here
 
+	CGameRankDlg dlg;
+
+	dlg.DoModal();
+
 }
 
 
@@ -275,3 +281,4 @@ void CLLKDlg::OnClickedBtnSetting ()
 
 	level = settingDlg.m_bLevel;
 }
+

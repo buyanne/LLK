@@ -19,6 +19,7 @@ public:
 	}
 };
 
+
 #define BLANK				-1		//判断是否为空
 #define MAX_ROW				16		//初始行数
 #define MAX_COL				15		//初始列数

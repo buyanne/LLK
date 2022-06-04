@@ -2,8 +2,9 @@
 // LLKDlg.h : header file
 //
 #pragma once
-
-
+#include <vector>
+#include<algorithm>
+using namespace std;
 
 
 
@@ -40,6 +41,10 @@ protected:
 
 	int background;
 
+
+
+
+
 public:
 	afx_msg void OnClickedBtnBasic();
 
@@ -51,5 +56,7 @@ public:
 	afx_msg void OnClickedBtnHelp();
 	afx_msg void OnClickedBtnRank();
 	afx_msg void OnClickedBtnSetting();
+
+
 	int level;
 };

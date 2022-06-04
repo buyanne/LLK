@@ -57,6 +57,9 @@
     <ClInclude Include="CGameSetingDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CGameRankDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LLK.cpp">
@@ -87,6 +90,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CGameSetingDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameRankDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="global.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

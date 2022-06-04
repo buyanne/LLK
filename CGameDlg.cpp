@@ -41,7 +41,7 @@ CGameDlg::CGameDlg(CWnd* pParent /*=nullptr*/)
 	m_bLevelModule = false;
 
 	if (timeCount == 0) {
-		timeCount == MAX_TIME;
+		timeCount = MAX_TIME;
 	}
 
 }
@@ -295,6 +295,8 @@ void CGameDlg::OnLButtonUp(UINT nFlags, CPoint point)
 			this->GetDlgItem(IDC_BTN_PAUSEGAME)->EnableWindow(FALSE);
 			this->GetDlgItem(IDC_BTN_SETTING)->EnableWindow(TRUE);
 			m_bPlaying = false;
+
+
 			return;
 		}
 
@@ -331,6 +333,7 @@ void CGameDlg::DrawTipLine(Vertex avPath[4], int nVexNum)
 	}
 	dc.SelectObject(pOldPen);
 }
+
 
 
 void CGameDlg::OnClickedBtnReloadmap()

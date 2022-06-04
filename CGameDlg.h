@@ -3,6 +3,8 @@
 #include"pch.h"
 #include"CGameSetingDlg.h"
 
+#include<vector>
+
 // CGameDlg dialog
 
 #define GAMEWND_WIDTH				900
@@ -57,8 +59,6 @@ protected:
 
 	CGameControl m_gameControl;
 
-	
-
 	void InitBackground();
 	void InitElement();
 
@@ -80,5 +80,6 @@ public:
 	void UpdateWindow();
 	void UpdateMap();
 	void DrawTipFrame(int nRow, int nCol);
-	void DrawTipLine(Vertex avPath[4], int nVexNum);	
+	void DrawTipLine(Vertex avPath[4], int nVexNum);
+
 };
