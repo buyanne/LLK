@@ -39,12 +39,6 @@ protected:
 	CDC m_dcMem;
 	void InitBackground();
 
-	int background;
-
-
-
-
-
 public:
 	afx_msg void OnClickedBtnBasic();
 
@@ -57,6 +51,6 @@ public:
 	afx_msg void OnClickedBtnRank();
 	afx_msg void OnClickedBtnSetting();
 
-
+	vector<pair<int,int> > vet;
 	int level;
 };

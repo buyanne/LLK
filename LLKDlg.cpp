@@ -59,6 +59,7 @@ CLLKDlg::CLLKDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_LLK_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	level = 1;
 }
 
 void CLLKDlg::DoDataExchange(CDataExchange* pDX)
@@ -215,7 +216,14 @@ void CLLKDlg::OnClickedBtnBasic()
 	dlg.level = level;
 	dlg.DoModal();
 
-
+	int time = -1;
+	int level = -1;
+	dlg.GetNode(time, level);
+	if (time != -1 && level != -1) {
+		vet.push_back({ time,level });
+	}
+	
+	
 	this->ShowWindow(SW_SHOW);
 }
 
@@ -266,7 +274,7 @@ void CLLKDlg::OnClickedBtnRank()
 	// TODO: Add your control notification handler code here
 
 	CGameRankDlg dlg;
-
+	dlg.vet = vet;
 	dlg.DoModal();
 
 }

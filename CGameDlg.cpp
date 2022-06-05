@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "LLK.h"
 #include"CGameSetingDlg.h"
+#include <fstream>
 
 
 
@@ -37,6 +38,8 @@ CGameDlg::CGameDlg(CWnd* pParent /*=nullptr*/)
 	m_bFirstEnterPause = true;
 
 	m_bModule = LEISURE_MODE;
+
+	level = 1;
 
 	m_bLevelModule = false;
 
@@ -289,12 +292,13 @@ void CGameDlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 		if (m_gameControl.IsWin()) {
 			MessageBox(_T("¹§Ï²Äã»ñÊ¤ÁË£¡"));
-			this->GetDlgItem(IDC_BTN_STARTGAME)->EnableWindow(TRUE);
-			this->GetDlgItem(IDC_BTN_GAMETIPS)->EnableWindow(FALSE);
-			this->GetDlgItem(IDC_BTN_RELOADMAP)->EnableWindow(FALSE);
-			this->GetDlgItem(IDC_BTN_PAUSEGAME)->EnableWindow(FALSE);
-			this->GetDlgItem(IDC_BTN_SETTING)->EnableWindow(TRUE);
+			
 			m_bPlaying = false;
+
+			ofstream out;
+			out.open("input.txt", ios::app);
+			out << timeCount << " " << level << endl;
+			out.close();
 
 
 			return;
@@ -332,6 +336,13 @@ void CGameDlg::DrawTipLine(Vertex avPath[4], int nVexNum)
 			m_ptGameTop.y + avPath[i].row * m_sizeElem.cy + m_sizeElem.cy / 2);
 	}
 	dc.SelectObject(pOldPen);
+}
+
+void CGameDlg::GetNode(int& time, int& l)
+{
+	time = timeCount;
+	l = level;
+	
 }
 
 

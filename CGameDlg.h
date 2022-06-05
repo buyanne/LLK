@@ -1,9 +1,7 @@
 #pragma once
-#include "afxdialogex.h"
-#include"pch.h"
-#include"CGameSetingDlg.h"
 
-#include<vector>
+
+
 
 // CGameDlg dialog
 
@@ -62,6 +60,7 @@ protected:
 	void InitBackground();
 	void InitElement();
 
+
 public:
 	int level;
 	virtual BOOL OnInitDialog();
@@ -81,5 +80,5 @@ public:
 	void UpdateMap();
 	void DrawTipFrame(int nRow, int nCol);
 	void DrawTipLine(Vertex avPath[4], int nVexNum);
-
+	void GetNode(int& time, int& level);
 };
