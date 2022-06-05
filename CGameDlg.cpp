@@ -164,6 +164,10 @@ void CGameDlg::OnClickedBtnStartgame() {
 	}
 	else {
 		// TODO..
+		CString s;
+		cnt++;
+		s.Format(_T("ตฺ %d นุ"),  cnt);
+		this->SetWindowTextW(s);
 		
 	}
 	this->GetDlgItem(IDC_BTN_STARTGAME)->EnableWindow(FALSE);

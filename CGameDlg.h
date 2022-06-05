@@ -81,4 +81,5 @@ public:
 	void DrawTipFrame(int nRow, int nCol);
 	void DrawTipLine(Vertex avPath[4], int nVexNum);
 	void GetNode(int& time, int& level);
+	int cnt = 0;
 };
