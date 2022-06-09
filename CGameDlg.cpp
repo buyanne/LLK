@@ -303,10 +303,12 @@ void CGameDlg::OnLButtonUp(UINT nFlags, CPoint point)
 			
 			m_bPlaying = false;
 
-			/*ofstream out;
-			out.open("input.txt", ios::app);
-			out << timeCount << " " << level << endl;
-			out.close();*/
+			if (m_bModule != BREAKTHROUGH_MODE) {
+				ofstream out;
+				out.open("input.txt", ios::app);
+				out << timeCount << " " << level << endl;
+				out.close();
+			}
 
 			m_gameControl.Release();
 
