@@ -63,6 +63,7 @@ void CGameGraph::InitMap()
 
 void CGameGraph::ReleaseMap()
 {
+	m_nVexNum = 0;
 }
 
 void CGameGraph::Clear(Vertex v1, Vertex v2)

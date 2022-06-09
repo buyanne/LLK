@@ -41,5 +41,7 @@ public:
 	bool Link(Vertex avPath[4], int& nVexNum);
 	bool IsWin(void);
 	void Lose();
+
+	void Release();
 };
 #endif // !CGAMECONTROL

@@ -74,7 +74,9 @@ public:
 	afx_msg void OnClickedBtnHelpingame();
 	afx_msg void OnChangeEditTime();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-
+	afx_msg void OnBnClickedButtonNextlevel();
+	
+	
 	void setModule(INT module);
 	void UpdateWindow();
 	void UpdateMap();
@@ -82,4 +84,5 @@ public:
 	void DrawTipLine(Vertex avPath[4], int nVexNum);
 	void GetNode(int& time, int& level);
 	int cnt = 0;
+	
 };

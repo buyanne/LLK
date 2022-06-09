@@ -134,5 +134,9 @@ void CGameControl::Lose()
 	base->ClearMap();
 }
 
+void CGameControl::Release() {
+	base->ReleaseMap();
+}
+
 
 

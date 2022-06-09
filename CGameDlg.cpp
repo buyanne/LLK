@@ -66,6 +66,7 @@ BEGIN_MESSAGE_MAP(CGameDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BTN_HELPINGAME, &CGameDlg::OnClickedBtnHelpingame)
 	ON_EN_CHANGE(IDC_EDIT_TIME, &CGameDlg::OnChangeEditTime)
 	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_BUTTON_NEXTLEVEL, &CGameDlg::OnBnClickedButtonNextlevel)
 END_MESSAGE_MAP()
 
 
@@ -158,9 +159,11 @@ void CGameDlg::OnClickedBtnStartgame() {
 	if (m_bModule == BASIC_MODE) {
 		this->SetTimer(1, 1000, NULL);
 		this->GetDlgItem(IDC_EDIT_TIME)->EnableWindow(TRUE);
+		this->GetDlgItem(IDC_BUTTON_NEXTLEVEL)->EnableWindow(false);
 	}
 	else if (m_bModule == LEISURE_MODE) {
 		// TODO..
+		this->GetDlgItem(IDC_BUTTON_NEXTLEVEL)->EnableWindow(false);
 	}
 	else {
 		// TODO..
@@ -168,6 +171,7 @@ void CGameDlg::OnClickedBtnStartgame() {
 		cnt++;
 		s.Format(_T("第 %d 关"),  cnt);
 		this->SetWindowTextW(s);
+		this->GetDlgItem(IDC_BUTTON_NEXTLEVEL)->EnableWindow(true);
 		
 	}
 	this->GetDlgItem(IDC_BTN_STARTGAME)->EnableWindow(FALSE);
@@ -299,10 +303,12 @@ void CGameDlg::OnLButtonUp(UINT nFlags, CPoint point)
 			
 			m_bPlaying = false;
 
-			ofstream out;
+			/*ofstream out;
 			out.open("input.txt", ios::app);
 			out << timeCount << " " << level << endl;
-			out.close();
+			out.close();*/
+
+			m_gameControl.Release();
 
 
 			return;
@@ -488,4 +494,29 @@ void CGameDlg::OnTimer(UINT_PTR nIDEvent)
 		}
 	}
 	CDialogEx::OnTimer(nIDEvent);
+}
+
+
+void CGameDlg::OnBnClickedButtonNextlevel()
+{
+	// TODO: Add your control notification handler code here
+
+	if (level == 3&&m_gameControl.IsWin()) {
+		MessageBox(_T("恭喜你通关了"));
+		return;
+	}
+	if (level < 3 && m_gameControl.IsWin()) {
+		level++;
+		cnt++;
+		
+		CString s;
+		s.Format(_T("第 %d 关"), cnt);
+		this->SetWindowTextW(s);
+		m_gameControl.StartGame();
+		UpdateMap();
+		InvalidateRect(false);
+		return;
+	}
+
+	MessageBox(_T("您还未通过当前关卡"));
 }
