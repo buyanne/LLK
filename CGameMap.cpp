@@ -121,10 +121,6 @@ void CGameMap::InitMap() {
 
 	 PopVertex();
 	 return false;
-
-
-
-	 return false;
  }
 
  bool CGameMap::IsBlank()
