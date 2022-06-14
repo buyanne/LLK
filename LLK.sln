@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LLK", "LLK.vcxproj", "{B4DF11A1-4CBD-4726-BA1C-7369B53DAC56}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LLKInstaller", "..\LLKInstaller\LLKInstaller.vdproj", "{090715C9-54F0-42D2-95FD-A446F0821568}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{B4DF11A1-4CBD-4726-BA1C-7369B53DAC56}.Release|x64.Build.0 = Release|x64
 		{B4DF11A1-4CBD-4726-BA1C-7369B53DAC56}.Release|x86.ActiveCfg = Release|Win32
 		{B4DF11A1-4CBD-4726-BA1C-7369B53DAC56}.Release|x86.Build.0 = Release|Win32
+		{090715C9-54F0-42D2-95FD-A446F0821568}.Debug|x64.ActiveCfg = Debug
+		{090715C9-54F0-42D2-95FD-A446F0821568}.Debug|x86.ActiveCfg = Debug
+		{090715C9-54F0-42D2-95FD-A446F0821568}.Release|x64.ActiveCfg = Release
+		{090715C9-54F0-42D2-95FD-A446F0821568}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
