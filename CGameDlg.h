@@ -57,6 +57,8 @@ protected:
 
 	CGameControl m_gameControl;
 
+	int score;
+
 	void InitBackground();
 	void InitElement();
 

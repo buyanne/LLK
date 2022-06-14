@@ -50,8 +50,8 @@ BOOL CGameRankDlg::OnInitDialog()
 	dwStyle |= LVS_EX_GRIDLINES;
 	m_list.SetExtendedStyle(dwStyle);
 	m_list.InsertColumn(0, _T("排名"), LVCFMT_CENTER, 120);
-	m_list.InsertColumn(1, _T("使用时间"), LVCFMT_CENTER, 110);
-	m_list.InsertColumn(2, _T("难度等级"), LVCFMT_CENTER, 110);
+	m_list.InsertColumn(1, _T("得分"), LVCFMT_CENTER, 110);
+	m_list.InsertColumn(2, _T("剩余时间"), LVCFMT_CENTER, 110);
 
 
 
@@ -76,7 +76,7 @@ void CGameRankDlg::OnBnClickedButton1()
 	//m_vecMessage->push_back(_T("2"));
 
 	//NormalMessageVector(A2W(sTempVaule.c_str()), m_vecMessage); 
-
+	vet.clear();
 	string s("input.txt");
 	int a, b;
 	ifstream in(s);
@@ -86,10 +86,10 @@ void CGameRankDlg::OnBnClickedButton1()
 	}
 
 	sort(vet.begin(), vet.end(), [](pair<int, int> a, pair<int, int> b){
-		if (a.second == b.second) {
-			return a.first > b.first;
+		if (a.first == b.first) {
+			return a.second > b.second;
 		}
-		return a.second < b.second;
+		return a.first > b.first;
 		});
 
 

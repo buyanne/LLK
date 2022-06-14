@@ -132,8 +132,8 @@ BOOL CGameDlg::OnInitDialog()
 	}
 	else if (m_bModule == BREAKTHROUGH_MODE) {
 		this->SetWindowTextW(CString("欢乐连连看--闯关模式"));
-		this->GetDlgItem(IDC_EDIT_TIME)->ShowWindow(FALSE);
-		this->GetDlgItem(IDC_STATIC)->ShowWindow(FALSE);
+		/*this->GetDlgItem(IDC_EDIT_TIME)->ShowWindow(FALSE);
+		this->GetDlgItem(IDC_STATIC)->ShowWindow(FALSE);*/
 	}
 
 
@@ -167,6 +167,8 @@ void CGameDlg::OnClickedBtnStartgame() {
 	}
 	else {
 		// TODO..
+		this->SetTimer(1, 1000, NULL);
+		this->GetDlgItem(IDC_EDIT_TIME)->EnableWindow(TRUE);
 		CString s;
 		cnt++;
 		s.Format(_T("第 %d 关"),  cnt);
@@ -293,6 +295,7 @@ void CGameDlg::OnLButtonUp(UINT nFlags, CPoint point)
 		if (m_gameControl.Link(avPath, nVexNum)) {
 			DrawTipLine(avPath, nVexNum);
 			UpdateMap();
+			score += 10;
 		}
 		Sleep(200);
 		InvalidateRect(m_rtGameRect, FALSE);
@@ -303,10 +306,11 @@ void CGameDlg::OnLButtonUp(UINT nFlags, CPoint point)
 			
 			m_bPlaying = false;
 
-			if (m_bModule != BREAKTHROUGH_MODE) {
+			//仅当娱乐模式记录成绩
+			if (m_bModule ==LEISURE_MODE&&score>=0) {
 				ofstream out;
 				out.open("input.txt", ios::app);
-				out << timeCount << " " << level << endl;
+				out << score << " " << timeCount << endl;
 				out.close();
 			}
 
@@ -366,6 +370,7 @@ void CGameDlg::OnClickedBtnReloadmap()
 	m_gameControl.Reoriganize();
 	UpdateMap();
 	InvalidateRect(m_rtGameRect, FALSE);
+	score -= 50;
 	m_bFirstPoint = true;
 }
 
@@ -386,6 +391,7 @@ void CGameDlg::OnClickedBtnGametips()
 		Sleep(500);    //延迟
 		UpdateMap();	//更新地图
 		InvalidateRect(m_rtGameRect, FALSE);
+		score -= 50;
 	}
 	else {
 		MessageBox(_T("没有找到路径请进行重排"));
@@ -435,7 +441,9 @@ void CGameDlg::OnClickedBtnHelpingame()
 		"1)游戏开始之后不可重新开始只可重新排列图案\n"
 		"2)点击暂停游戏使游戏中断，暂停时不可点击提示和重排按键，可再次点击暂停游戏继续游戏\n"
 		"3)点击提示按钮可以显示一个自上而下的第一对可连接的图案\n"
-		"4)点击重排可对剩下图形进行随机重排序，其中已消除方块不会重新出现"));
+		"4)点击重排可对剩下图形进行随机重排序，其中已消除方块不会重新出现\n"
+		"得分帮助（休闲模式下有效）\n"
+		"每消除一对方块获得10分，每次点击提示或者重排减少50分，所有方块消除后可加入至排行榜，id具体为当前界面编号\n"));
 }
 
 
@@ -517,6 +525,14 @@ void CGameDlg::OnBnClickedButtonNextlevel()
 		m_gameControl.StartGame();
 		UpdateMap();
 		InvalidateRect(false);
+		if (level == 2) {
+			timeCount = 200;
+		}
+		else if (level == 3) {
+			timeCount = 150;
+		}
+		this->SetTimer(1, 1000, NULL);
+		
 		return;
 	}
 

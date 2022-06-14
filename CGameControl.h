@@ -26,6 +26,7 @@ public:
 	/*int** m_pGameMap;
 	CGameLogic m_GameLogic;*/
 
+
 public:
 	// construction 
 	CGameControl();
